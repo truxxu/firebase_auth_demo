@@ -56,6 +56,7 @@ const Register = ({navigation}) => {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.errorText}>{error}</Text>
       <TextInput
         style={styles.inputStyle}
         placeholder="Name"
@@ -76,19 +77,13 @@ const Register = ({navigation}) => {
         maxLength={15}
         secureTextEntry={true}
       />
-      <Button
-        color="#3740FE"
-        title="Create new account"
-        onPress={() => registerUser()}
-      />
+      <Button title="Create new account" onPress={() => registerUser()} />
 
       <Text
         style={styles.loginText}
         onPress={() => navigation.navigate('Login')}>
         Already Registered? Click here to login
       </Text>
-
-      <Text style={styles.errorText}>{error}</Text>
     </View>
   );
 };
@@ -111,7 +106,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   loginText: {
-    color: '#3740FE',
+    color: 'blue',
     marginTop: 25,
     textAlign: 'center',
   },
