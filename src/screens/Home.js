@@ -5,7 +5,7 @@ import firebase from '../../database/firebase';
 
 const Home = ({navigation}) => {
   const [error, setError] = useState('');
-  const name = firebase.auth().currentUser.name;
+  const name = firebase.auth().currentUser.displayName;
 
   const signOutUser = async () => {
     try {

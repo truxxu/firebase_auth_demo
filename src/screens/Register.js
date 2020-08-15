@@ -8,41 +8,35 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
+import {useForm, Controller} from 'react-hook-form';
 
 import firebase from '../../database/firebase';
 
 const Register = ({navigation}) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
+  const {control, handleSubmit, errors, clearErrors} = useForm();
+
   const resetForm = () => {
-    setEmail('');
-    setPassword('');
-    setName('');
     setError('');
+    clearErrors();
   };
 
-  const registerUser = async () => {
-    if (email === '' && password === '') {
-      Alert.alert('Enter details to signup!');
-    } else {
-      setIsLoading(true);
-      try {
-        const response = await firebase
-          .auth()
-          .createUserWithEmailAndPassword(email, password);
-        response.user.updateProfile({name});
-        console.log('User registered successfully!');
-        resetForm();
-        navigation.navigate('Home');
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setIsLoading(false);
-      }
+  const registerUser = async ({displayName, email, password}) => {
+    setIsLoading(true);
+    try {
+      const response = await firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password);
+      response.user.updateProfile({displayName});
+      console.log('User registered successfully!');
+      resetForm();
+      navigation.navigate('Home');
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -56,28 +50,64 @@ const Register = ({navigation}) => {
 
   return (
     <View style={styles.container}>
+      <Controller
+        control={control}
+        render={({onChange, onBlur, value}) => (
+          <TextInput
+            style={styles.inputStyle}
+            onBlur={onBlur}
+            onChangeText={(value) => onChange(value)}
+            value={value}
+            placeholder="Name"
+          />
+        )}
+        name="displayName"
+        rules={{required: true}}
+        defaultValue=""
+      />
+      {errors.displayName && (
+        <Text style={styles.errorText}>Name is required.</Text>
+      )}
+      <Controller
+        control={control}
+        render={({onChange, onBlur, value}) => (
+          <TextInput
+            style={styles.inputStyle}
+            onBlur={onBlur}
+            onChangeText={(value) => onChange(value)}
+            value={value}
+            placeholder="Email"
+          />
+        )}
+        name="email"
+        rules={{required: true, pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/}}
+        defaultValue=""
+      />
+      {errors.email && (
+        <Text style={styles.errorText}>Plase introduce a valid email</Text>
+      )}
+      <Controller
+        control={control}
+        render={({onChange, onBlur, value}) => (
+          <TextInput
+            style={styles.inputStyle}
+            onBlur={onBlur}
+            onChangeText={(value) => onChange(value)}
+            value={value}
+            placeholder="Password"
+            secureTextEntry={true}
+          />
+        )}
+        name="password"
+        rules={{required: true, minLength: 3, maxLength: 10}}
+        defaultValue=""
+      />
+      {errors.password && (
+        <Text style={styles.errorText}>Password is required.</Text>
+      )}
+
+      <Button title="Create new account" onPress={handleSubmit(registerUser)} />
       <Text style={styles.errorText}>{error}</Text>
-      <TextInput
-        style={styles.inputStyle}
-        placeholder="Name"
-        value={name}
-        onChangeText={(name) => setName(name)}
-      />
-      <TextInput
-        style={styles.inputStyle}
-        placeholder="Email"
-        value={email}
-        onChangeText={(email) => setEmail(email)}
-      />
-      <TextInput
-        style={styles.inputStyle}
-        placeholder="Password"
-        value={password}
-        onChangeText={(password) => setPassword(password)}
-        maxLength={15}
-        secureTextEntry={true}
-      />
-      <Button title="Create new account" onPress={() => registerUser()} />
 
       <Text
         style={styles.loginText}
