@@ -29,9 +29,7 @@ const Login = ({navigation}) => {
     } else {
       setIsLoading(true);
       try {
-        const response = await firebase
-          .auth()
-          .signInWithEmailAndPassword(email, password);
+        await firebase.auth().signInWithEmailAndPassword(email, password);
         console.log('User logged-in successfully!');
         resetForm();
         navigation.navigate('Home');

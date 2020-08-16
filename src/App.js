@@ -1,5 +1,4 @@
 import React from 'react';
-import {View, Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
@@ -13,9 +12,13 @@ const App = () => {
       <Stack.Navigator
         initialRouteName="Register"
         screenOptions={{
+          headerStyle: {
+            height: 40,
+          },
           headerTitleAlign: 'center',
           headerTitleStyle: {
             fontWeight: 'bold',
+            fontSize: 15,
           },
         }}>
         <Stack.Screen
