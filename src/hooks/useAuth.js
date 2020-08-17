@@ -47,3 +47,23 @@ export const useLogin = () => {
 
   return [logInUser, isLoading, error];
 };
+
+export const useLogOut = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const signOutUser = async () => {
+    setIsLoading(true);
+    try {
+      await firebase.auth().signOut();
+      navigate('Login');
+      console.log('User logged-out successfully!');
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return [signOutUser, isLoading, error];
+};
