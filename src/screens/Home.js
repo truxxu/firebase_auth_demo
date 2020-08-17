@@ -1,11 +1,20 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {StyleSheet, View, Text, Button} from 'react-native';
 
 import firebase from '../../database/firebase';
+import {InputError} from '../atoms';
 
 const Home = ({navigation}) => {
+  const [user, setUser] = useState('');
   const [error, setError] = useState('');
-  const name = firebase.auth().currentUser.displayName;
+
+  useEffect(() => {
+    async function getUser() {
+      let response = await firebase.auth().currentUser.displayName;
+      setUser(response);
+    }
+    getUser();
+  }, []);
 
   const signOutUser = async () => {
     try {
@@ -18,9 +27,9 @@ const Home = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.textStyle}>Hello, {name}</Text>
-      <Text style={styles.errorText}>{error}</Text>
-      <Button title="Logout" onPress={() => signOutUser()} />
+      <Text style={styles.textStyle}>Hello, {user}</Text>
+      <InputError text={error} error={error} />
+      <Button title="Logout" onPress={signOutUser} />
     </View>
   );
 };
@@ -37,11 +46,6 @@ const styles = StyleSheet.create({
   textStyle: {
     fontSize: 15,
     marginBottom: 20,
-  },
-  errorText: {
-    color: 'red',
-    marginTop: 25,
-    textAlign: 'center',
   },
 });
 
