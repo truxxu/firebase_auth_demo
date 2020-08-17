@@ -3,7 +3,7 @@ import {useState} from 'react';
 import firebase from '../api/firebase';
 import {navigate} from '../RootNavigation';
 
-export default () => {
+export const useRegister = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -15,7 +15,7 @@ export default () => {
         .createUserWithEmailAndPassword(email, password);
       response.user.updateProfile({displayName});
       console.log('User registered successfully!');
-      resetForm();
+      setError('');
       navigate('Home');
     } catch (err) {
       setError(err.message);

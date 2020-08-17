@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {StyleSheet, Text, View, Button} from 'react-native';
 import {useForm} from 'react-hook-form';
 
-import firebase from '../../database/firebase';
+import firebase from '../api/firebase';
 import {LoginForm} from '../molecules';
 import {InputError, Spinner} from '../atoms';
 

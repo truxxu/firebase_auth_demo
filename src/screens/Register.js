@@ -2,37 +2,13 @@ import React, {useState} from 'react';
 import {StyleSheet, Text, View, Button} from 'react-native';
 import {useForm} from 'react-hook-form';
 
-import firebase from '../../database/firebase';
-import {RegisterForm} from '../molecules';
+import {useRegister} from '../hooks/useAuth';
 import {InputError, Spinner} from '../atoms';
+import {RegisterForm} from '../molecules';
 
 const Register = ({navigation}) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
-
-  const {control, handleSubmit, errors, clearErrors} = useForm();
-
-  const resetForm = () => {
-    setError('');
-    clearErrors();
-  };
-
-  const registerUser = async ({displayName, email, password}) => {
-    setIsLoading(true);
-    try {
-      const response = await firebase
-        .auth()
-        .createUserWithEmailAndPassword(email, password);
-      response.user.updateProfile({displayName});
-      console.log('User registered successfully!');
-      resetForm();
-      navigation.navigate('Home');
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const {control, handleSubmit, errors} = useForm();
+  const [registerUser, isLoading, error] = useRegister();
 
   if (isLoading) {
     return <Spinner />;

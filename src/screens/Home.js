@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, View, Text, Button} from 'react-native';
 
-import firebase from '../../database/firebase';
+import firebase from '../api/firebase';
 import {InputError} from '../atoms';
 
 const Home = ({navigation}) => {
