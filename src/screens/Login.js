@@ -1,35 +1,14 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {StyleSheet, Text, View, Button} from 'react-native';
 import {useForm} from 'react-hook-form';
 
-import firebase from '../api/firebase';
-import {LoginForm} from '../molecules';
+import {useLogin} from '../hooks/useAuth';
 import {InputError, Spinner} from '../atoms';
+import {LoginForm} from '../molecules';
 
 const Login = ({navigation}) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
-
-  const {control, handleSubmit, errors, clearErrors} = useForm();
-
-  const resetForm = () => {
-    setError('');
-    clearErrors();
-  };
-
-  const logInUser = async ({email, password}) => {
-    setIsLoading(true);
-    try {
-      await firebase.auth().signInWithEmailAndPassword(email, password);
-      console.log('User logged-in successfully!');
-      resetForm();
-      navigation.navigate('Home');
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const {control, handleSubmit, errors} = useForm();
+  const [logInUser, isLoading, error] = useLogin();
 
   if (isLoading) {
     return <Spinner />;

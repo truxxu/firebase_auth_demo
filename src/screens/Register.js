@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {StyleSheet, Text, View, Button} from 'react-native';
 import {useForm} from 'react-hook-form';
 
