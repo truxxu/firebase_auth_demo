@@ -1,11 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, View, Text, Button} from 'react-native';
 
-import {useLogOut} from '../hooks/useAuth';
+import {Context as AuthContext} from '../context/AuthContext';
 import {InputError, Spinner} from '../atoms';
 
 const Home = ({navigation}) => {
-  const [signOutUser, isLoading, error] = useLogOut();
+  const {logOutUser, state} = useContext(AuthContext);
+  const {isLoading, error} = state;
+  const user = state.user.displayName || 'User';
 
   if (isLoading) {
     return <Spinner />;
@@ -13,9 +15,9 @@ const Home = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.textStyle}>Hello, user</Text>
+      <Text style={styles.textStyle}>Hello, {user}</Text>
       <InputError text={error} error={error} />
-      <Button title="Logout" onPress={signOutUser} />
+      <Button title="Logout" onPress={logOutUser} />
     </View>
   );
 };

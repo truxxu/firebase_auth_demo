@@ -2,18 +2,25 @@ import React, {useContext, useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import {navigationRef} from './RootNavigation';
-import {Home, Login, Register} from './screens';
 import {Context as AuthContext} from './context/AuthContext';
+import {navigationRef} from './RootNavigation';
+import {Spinner} from './atoms';
+import {Home, Login, Register} from './screens';
 
 const Stack = createStackNavigator();
 
 const App = () => {
   const {getUser, state} = useContext(AuthContext);
+  console.log(state.user);
 
-  // useEffect(() => {
-  //   getUser();
-  // }, []);
+  useEffect(() => {
+    console.log('fetching user...');
+    getUser();
+  }, []);
+
+  if (state.isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <NavigationContainer ref={navigationRef}>
