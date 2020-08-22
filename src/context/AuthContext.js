@@ -19,10 +19,13 @@ const authReducer = (state, action) => {
 const getUser = (dispatch) => async () => {
   dispatch({type: 'toggle_load'});
   try {
-    const response = await firebase.auth().currentUser;
-    dispatch({type: 'get_user', payload: response});
-  } catch (err) {
-    dispatch({type: 'add_error', payload: err.message});
+    await firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        // User is signed in.
+        dispatch({type: 'get_user', payload: user});
+        console.log('user is already signed in');
+      }
+    });
   } finally {
     dispatch({type: 'toggle_load'});
   }

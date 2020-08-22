@@ -11,11 +11,10 @@ const Stack = createStackNavigator();
 
 const App = () => {
   const {getUser, state} = useContext(AuthContext);
-  console.log(state.user);
 
   useEffect(() => {
-    console.log('fetching user...');
     getUser();
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (state.isLoading) {
