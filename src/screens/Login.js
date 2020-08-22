@@ -1,14 +1,17 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, Text, View, Button} from 'react-native';
 import {useForm} from 'react-hook-form';
 
-import {useLogin} from '../hooks/useAuth';
+import {Context as AuthContext} from '../context/AuthContext';
 import {InputError, Spinner} from '../atoms';
 import {LoginForm} from '../molecules';
 
 const Login = ({navigation}) => {
   const {control, handleSubmit, errors} = useForm();
-  const [logInUser, isLoading, error] = useLogin();
+  const {
+    logInUser,
+    state: {isLoading, error},
+  } = useContext(AuthContext);
 
   if (isLoading) {
     return <Spinner />;

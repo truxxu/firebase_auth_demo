@@ -1,42 +1,31 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import {navigationRef} from './RootNavigation';
 import {Home, Login, Register} from './screens';
+import {Context as AuthContext} from './context/AuthContext';
 
 const Stack = createStackNavigator();
 
 const App = () => {
+  const {getUser, state} = useContext(AuthContext);
+
+  // useEffect(() => {
+  //   getUser();
+  // }, []);
+
   return (
     <NavigationContainer ref={navigationRef}>
-      <Stack.Navigator
-        initialRouteName="Register"
-        screenOptions={{
-          headerStyle: {
-            height: 40,
-          },
-          headerTitleAlign: 'center',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-            fontSize: 15,
-          },
-        }}>
-        <Stack.Screen
-          name="Login"
-          component={Login}
-          options={{title: 'Login'}}
-        />
-        <Stack.Screen
-          name="Register"
-          component={Register}
-          options={({title: 'Register'}, {headerLeft: null})}
-        />
-        <Stack.Screen
-          name="Home"
-          component={Home}
-          options={({title: 'Home'}, {headerLeft: null})}
-        />
+      <Stack.Navigator>
+        {state.user ? (
+          <Stack.Screen name="Home" component={Home} />
+        ) : (
+          <React.Fragment>
+            <Stack.Screen name="Register" component={Register} />
+            <Stack.Screen name="Login" component={Login} />
+          </React.Fragment>
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );

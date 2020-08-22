@@ -1,20 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {StyleSheet, View, Text, Button} from 'react-native';
 
 import {useLogOut} from '../hooks/useAuth';
 import {InputError, Spinner} from '../atoms';
 
 const Home = ({navigation}) => {
-  const [user, setUser] = useState('');
   const [signOutUser, isLoading, error] = useLogOut();
-
-  // useEffect(() => {
-  //   async function getUser() {
-  //     let response = await firebase.auth().currentUser.displayName;
-  //     setUser(response);
-  //   }
-  //   getUser();
-  // }, []);
 
   if (isLoading) {
     return <Spinner />;

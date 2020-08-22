@@ -16,7 +16,7 @@ export const useRegister = () => {
       response.user.updateProfile({displayName});
       console.log('User registered successfully!');
       setError('');
-      navigate('Home');
+      // navigate('Home');
     } catch (err) {
       setError(err.message);
     } finally {
@@ -25,27 +25,6 @@ export const useRegister = () => {
   };
 
   return [registerUser, isLoading, error];
-};
-
-export const useLogin = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
-
-  const logInUser = async ({email, password}) => {
-    setIsLoading(true);
-    try {
-      await firebase.auth().signInWithEmailAndPassword(email, password);
-      console.log('User logged-in successfully!');
-      setError('');
-      navigate('Home');
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  return [logInUser, isLoading, error];
 };
 
 export const useLogOut = () => {
