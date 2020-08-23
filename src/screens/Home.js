@@ -1,23 +1,10 @@
-import React, {useContext} from 'react';
-import {StyleSheet, View, Text, Button} from 'react-native';
-
-import {Context as AuthContext} from '../context/AuthContext';
-import {InputError, Spinner} from '../atoms';
+import React from 'react';
+import {View, Text, StyleSheet} from 'react-native';
 
 const Home = ({navigation}) => {
-  const {logOutUser, state} = useContext(AuthContext);
-  const {isLoading, error} = state;
-  const user = state.user.displayName || 'User';
-
-  if (isLoading) {
-    return <Spinner />;
-  }
-
   return (
     <View style={styles.container}>
-      <Text style={styles.textStyle}>Hello, {user}</Text>
-      <InputError text={error} error={error} />
-      <Button title="Logout" onPress={logOutUser} />
+      <Text>Home goes here</Text>
     </View>
   );
 };
@@ -30,10 +17,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 35,
     backgroundColor: '#fff',
-  },
-  textStyle: {
-    fontSize: 15,
-    marginBottom: 20,
   },
 });
 

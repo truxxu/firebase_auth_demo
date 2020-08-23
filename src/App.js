@@ -5,9 +5,10 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {Context as AuthContext} from './context/AuthContext';
 import {navigationRef} from './RootNavigation';
 import {Spinner} from './atoms';
-import {Home, Login, Register} from './screens';
+import {AuthFlow, MainFlow} from './navigation';
 
 const Stack = createStackNavigator();
+const NavigationOptions = {headerShown: false};
 
 const App = () => {
   const {getUser, state} = useContext(AuthContext);
@@ -25,12 +26,17 @@ const App = () => {
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator>
         {state.user ? (
-          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen
+            name="MainFlow"
+            component={MainFlow}
+            options={NavigationOptions}
+          />
         ) : (
-          <React.Fragment>
-            <Stack.Screen name="Register" component={Register} />
-            <Stack.Screen name="Login" component={Login} />
-          </React.Fragment>
+          <Stack.Screen
+            name="AuthFlow"
+            component={AuthFlow}
+            options={NavigationOptions}
+          />
         )}
       </Stack.Navigator>
     </NavigationContainer>
