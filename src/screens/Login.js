@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     padding: 35,
-    backgroundColor: '#fff',
   },
   loginText: {
     color: '#3740FE',

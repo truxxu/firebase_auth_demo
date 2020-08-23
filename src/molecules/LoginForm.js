@@ -3,6 +3,14 @@ import {View} from 'react-native';
 
 import {Input, InputError} from '../atoms';
 
+const inputStyle = {
+  width: '100%',
+  alignSelf: 'center',
+  borderColor: '#ccc',
+  borderBottomWidth: 1,
+  marginBottom: 15,
+};
+
 const LoginForm = ({control, errors}) => {
   return (
     <View>
@@ -13,6 +21,7 @@ const LoginForm = ({control, errors}) => {
         placeholder="Email"
         rules={{required: true, pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/}}
         autoCorrect={false}
+        style={inputStyle}
       />
       <Input
         name="password"
@@ -21,6 +30,7 @@ const LoginForm = ({control, errors}) => {
         rules={{required: true}}
         autoCorrect={false}
         secureTextEntry
+        style={inputStyle}
       />
     </View>
   );

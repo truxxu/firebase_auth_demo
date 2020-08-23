@@ -25,11 +25,11 @@ const Input = ({name, control, rules, ...rest}) => {
 
 const styles = StyleSheet.create({
   inputStyle: {
-    width: '100%',
-    alignSelf: 'center',
-    borderColor: '#ccc',
-    borderBottomWidth: 1,
-    marginBottom: 15,
+    // width: '100%',
+    // alignSelf: 'center',
+    // borderColor: '#ccc',
+    // borderBottomWidth: 1,
+    // marginBottom: 15,
   },
 });
 
