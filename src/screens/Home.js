@@ -1,20 +1,13 @@
-import React, {useState, useEffect} from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, View, Text, Button} from 'react-native';
 
-import {useLogOut} from '../hooks/useAuth';
+import {Context as AuthContext} from '../context/AuthContext';
 import {InputError, Spinner} from '../atoms';
 
 const Home = ({navigation}) => {
-  const [user, setUser] = useState('');
-  const [signOutUser, isLoading, error] = useLogOut();
-
-  // useEffect(() => {
-  //   async function getUser() {
-  //     let response = await firebase.auth().currentUser.displayName;
-  //     setUser(response);
-  //   }
-  //   getUser();
-  // }, []);
+  const {logOutUser, state} = useContext(AuthContext);
+  const {isLoading, error} = state;
+  const user = state.user.displayName || 'User';
 
   if (isLoading) {
     return <Spinner />;
@@ -22,9 +15,9 @@ const Home = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.textStyle}>Hello, user</Text>
+      <Text style={styles.textStyle}>Hello, {user}</Text>
       <InputError text={error} error={error} />
-      <Button title="Logout" onPress={signOutUser} />
+      <Button title="Logout" onPress={logOutUser} />
     </View>
   );
 };
