@@ -1,52 +1,13 @@
 import React, {useContext, useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {Context as AuthContext} from './context/AuthContext';
 import {navigationRef} from './RootNavigation';
 import {Spinner} from './atoms';
-import {Home, Login, Register, Welcome, Profile} from './screens';
+import {AuthFlow, MainFlow} from './navigation';
 
 const Stack = createStackNavigator();
-const authStack = () => {
-  return (
-    <Stack.Navigator screenOptions={NavigationOptions}>
-      <Stack.Screen name="Welcome" component={Welcome} />
-      <Stack.Screen name="Register" component={Register} />
-      <Stack.Screen name="Login" component={Login} />
-    </Stack.Navigator>
-  );
-};
-
-const Tab = createBottomTabNavigator();
-const tabNavigator = () => {
-  return (
-    <Tab.Navigator
-      screenOptions={({route}) => ({
-        tabBarIcon: ({focused, color, size}) => {
-          let iconName;
-
-          if (route.name === 'Home') {
-            iconName = focused ? 'home' : 'home-outline';
-          } else if (route.name === 'Profile') {
-            iconName = focused ? 'account' : 'account-outline';
-          }
-
-          return <Icon name={iconName} size={size} color={color} />;
-        },
-      })}
-      tabBarOptions={{
-        activeTintColor: 'blue',
-        inactiveTintColor: 'gray',
-      }}>
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Profile" component={Profile} />
-    </Tab.Navigator>
-  );
-};
-
 const NavigationOptions = {headerShown: false};
 
 const App = () => {
@@ -66,14 +27,14 @@ const App = () => {
       <Stack.Navigator>
         {state.user ? (
           <Stack.Screen
-            name="tabNavigator"
-            component={tabNavigator}
+            name="MainFlow"
+            component={MainFlow}
             options={NavigationOptions}
           />
         ) : (
           <Stack.Screen
-            name="authStack"
-            component={authStack}
+            name="AuthFlow"
+            component={AuthFlow}
             options={NavigationOptions}
           />
         )}
