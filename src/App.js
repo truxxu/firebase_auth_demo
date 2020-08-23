@@ -5,7 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {Context as AuthContext} from './context/AuthContext';
 import {navigationRef} from './RootNavigation';
 import {Spinner} from './atoms';
-import {Home, Login, Register} from './screens';
+import {Home, Login, Register, Welcome} from './screens';
 
 const Stack = createStackNavigator();
 
@@ -28,6 +28,13 @@ const App = () => {
           <Stack.Screen name="Home" component={Home} />
         ) : (
           <React.Fragment>
+            <Stack.Screen
+              name="Welcome"
+              component={Welcome}
+              options={{
+                headerShown: false,
+              }}
+            />
             <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="Login" component={Login} />
           </React.Fragment>
