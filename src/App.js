@@ -2,6 +2,7 @@ import React, {useContext, useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {Context as AuthContext} from './context/AuthContext';
 import {navigationRef} from './RootNavigation';
@@ -22,7 +23,24 @@ const authStack = () => {
 const Tab = createBottomTabNavigator();
 const tabNavigator = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={({route}) => ({
+        tabBarIcon: ({focused, color, size}) => {
+          let iconName;
+
+          if (route.name === 'Home') {
+            iconName = focused ? 'home' : 'home-outline';
+          } else if (route.name === 'Profile') {
+            iconName = focused ? 'account' : 'account-outline';
+          }
+
+          return <Icon name={iconName} size={size} color={color} />;
+        },
+      })}
+      tabBarOptions={{
+        activeTintColor: 'blue',
+        inactiveTintColor: 'gray',
+      }}>
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
