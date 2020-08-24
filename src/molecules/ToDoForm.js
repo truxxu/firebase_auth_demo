@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, Button} from 'react-native';
 import {useForm} from 'react-hook-form';
+import firebase from '../api/firebase';
 
 import {Input, InputError} from '../atoms';
 
@@ -11,8 +12,19 @@ const inputStyle = {
 
 const ToDoForm = () => {
   const {control, handleSubmit, errors} = useForm();
-  const addToDo = () => {
-    console.log('added!');
+
+  const todosRef = firebase.firestore().collection('todos');
+
+  const addToDo = async ({text}) => {
+    console.log(text);
+    try {
+      await todosRef.add({text});
+      console.log('added');
+    } catch (err) {
+      console.log(err.message);
+    } finally {
+      console.log('completed');
+    }
   };
 
   return (
