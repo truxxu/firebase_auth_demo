@@ -14,17 +14,17 @@ const ToDoForm = () => {
   const {control, handleSubmit, errors} = useForm();
 
   const todosRef = firebase.firestore().collection('todos');
+  console.log(todosRef);
 
-  const addToDo = async ({text}) => {
-    console.log(text);
-    try {
-      await todosRef.add({text});
-      console.log('added');
-    } catch (err) {
-      console.log(err.message);
-    } finally {
-      console.log('completed');
-    }
+  const addToDo = ({text}) => {
+    todosRef
+      .add({text})
+      .then((res) => {
+        console.log('completed');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
